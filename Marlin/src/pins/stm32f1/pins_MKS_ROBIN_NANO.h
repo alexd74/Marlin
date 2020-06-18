@@ -120,15 +120,24 @@
  * to let the bootloader init the screen.
  */
 #if ENABLED(FSMC_GRAPHICAL_TFT)
+  //@
+  #define DOGLCD_MOSI -1 // prevent redefine Conditionals_post.h
+  #define DOGLCD_SCK -1
+
   #define FSMC_CS_PIN                       PD7   // NE4
   #define FSMC_RS_PIN                       PD11  // A0
 
-  #define LCD_RESET_PIN                     PC6   // FSMC_RST
-  #define NO_LCD_REINIT                           // Suppress LCD re-initialization
+  #define LCD_USE_DMA_FSMC //
+  #define FSMC_DMA_DEV DMA2
+  #define FSMC_DMA_CHANNEL DMA_CH5
+
+  //#define LCD_RESET_PIN                     PC6   // FSMC_RST
+  //#define NO_LCD_REINIT                           // Suppress LCD re-initialization
 
   #define LCD_BACKLIGHT_PIN                 PD13
 
   #if ENABLED(TOUCH_BUTTONS)
+
     #define TOUCH_CS_PIN                    PA7   // SPI2_NSS
     #define TOUCH_SCK_PIN                   PB13  // SPI2_SCK
     #define TOUCH_MISO_PIN                  PB14  // SPI2_MISO
