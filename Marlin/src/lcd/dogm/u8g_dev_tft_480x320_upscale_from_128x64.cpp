@@ -516,7 +516,7 @@ static const uint8_t ili9341_init_sequence[] = { // 0x9341 - ILI9341
     reqDrawButtons = true;
   }
 
-  static void switchColor(uint16_t uiColor, uint16_t bgColor)
+  void switchColor(uint16_t uiColor, uint16_t bgColor)
   {
     ui_color = uiColor;
     bg_color = bgColor;

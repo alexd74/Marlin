@@ -387,6 +387,11 @@ typedef struct SettingsDataStruct {
   #if HAS_CASE_LIGHT_BRIGHTNESS
     uint8_t case_light_brightness;
   #endif
+  // EEPROM_USER_DATA
+  //
+  #if ENABLED(EEPROM_USER_DATA)
+    UserData::Container user_data;
+  #endif
 
 } SettingsData;
 
@@ -1332,6 +1337,15 @@ void MarlinSettings::postprocess() {
       EEPROM_WRITE(case_light_brightness);
     #endif
 
+    #if ENABLED(EEPROM_USER_DATA)
+      {
+        UserData::Container user_data;
+        UserData::onStoreSettings(user_data);
+        _FIELD_TEST(user_data);
+        EEPROM_WRITE(user_data);
+      }
+    #endif
+
     //
     // Validate CRC and Data Size
     //
@@ -2192,6 +2206,15 @@ void MarlinSettings::postprocess() {
       #if HAS_CASE_LIGHT_BRIGHTNESS
         _FIELD_TEST(case_light_brightness);
         EEPROM_READ(case_light_brightness);
+      #endif
+
+      #if ENABLED(EEPROM_USER_DATA)
+        {
+          UserData::Container user_data;
+          _FIELD_TEST(user_data);
+          EEPROM_READ(user_data);
+          if (!validating) UserData::onLoadSettings(user_data);
+        }
       #endif
 
       eeprom_error = size_error(eeprom_index - (EEPROM_OFFSET));
