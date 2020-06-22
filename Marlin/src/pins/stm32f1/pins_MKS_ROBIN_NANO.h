@@ -38,6 +38,17 @@
 //
 #define DISABLE_DEBUG
 
+// Testing - not working yet
+#define SPI_FLASH
+#define SPI_FLASH_EEPROM_OFFSET 0x700000
+#define SPI_FLASH_DEVICE 2
+#define SPI_FLASH_CS_PIN PB12
+
+//
+// Note: MKS Robin board is using SPI2 interface.
+//
+#define SPI_MODULE 2
+
 //
 // Limit Switches
 //
